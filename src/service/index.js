@@ -1,13 +1,21 @@
-const url = "http://localhost:6003/"
+import axios from "axios";
+
+const url = "https://rickandmortyapi.com/api/character";
 
 export const listMovies = async () => {
   try {
-    const movies = await fetch(url);
+    const response = await axios.get(url);
 
-    const data = await movies.json();
+    const { results } = response.data;
 
-    return data
+    return {
+      ok: true,
+      data: results,
+    };
   } catch (error) {
-    return error.message;
+    return {
+      ok: false,
+      error: error.message,
+    };
   }
-}
+};

@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import { listMovies } from "../../service";
+import { Card } from "../../components";
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
 
   const fetchMovies = async () => {
-    const {data} = await listMovies();
+    const { ok, data } = await listMovies();
+
+    if (!ok) return;
+
     setMovies(data);
-  }
+  };
 
   useEffect(() => {
     fetchMovies();
@@ -16,22 +20,16 @@ const Home = () => {
   return (
     <>
       <div className="container">
-        <h1>Lista de Películas</h1>
+        <h1>Lista de Personajes</h1>
       </div>
       <div className="container__movies">
-        {
-          movies.length > 0 && movies.map((movie, index) => (
-            <div className="card" key={index}>
-              <img src={movie.image} />
-              <div className="container__detail">
-                <h4>{movie.title}</h4>
-                <p className="text__description">
-                 {movie.description}
-                </p>
-              </div>
-            </div>
-          ))
-        }
+        {movies.length > 0 ? (
+          movies.map((movie, index) => <Card movie={movie} key={index} />)
+        ) : (
+          <div>
+            <h4>Aun no hay peliculas</h4>
+          </div>
+        )}
       </div>
     </>
   );

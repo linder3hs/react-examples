@@ -1,13 +1,7 @@
-import { Header } from "./components"
-import { HomeView } from "./pages"
+import Router from "./router";
 
 const App = () => {
-  return (
-    <>
-      <Header />
-      <HomeView />
-    </>
-  )
-}
+  return <Router />;
+};
 
 export default App;
